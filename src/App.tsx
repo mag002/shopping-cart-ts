@@ -26,27 +26,33 @@ function App() {
     name: 'Ipad pro 11 inch',
     price: 450,
     inStock: true,
+    image: ''
   },
   {
     id: '2',
     category: 'phone',
     name: 'iphone',
     price: 620,
-    inStock: true
+    inStock: true,
+    image: ''
+
   },
   {
     id: '3',
     category: 'computer',
     name: 'Macbook pro M4 ',
     price: 2100,
-    inStock: true
+    inStock: true,
+    image: ''
+
   },
   {
     id: '4',
     category: 'computer',
     name: 'Macbook pro M4 ',
     price: 2100,
-    inStock: false
+    inStock: false,
+    image: ''
   }
   ]
 
@@ -88,7 +94,7 @@ function App() {
               return true
             }
           }).map(product => {
-            return <Product key={product.id} {...product} isShow></Product>
+            return <Product key={product.id} product={product}></Product>
             // Product({key:product.id)
           })
         }

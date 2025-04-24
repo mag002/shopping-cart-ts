@@ -1,10 +1,11 @@
 export interface Product {
     id: string;
+    image: string;
     name: string;
     price: number;
     inStock: boolean;
     tags?: string[];
-    category?: Category
+    category: Category
 }
 
 export interface CartItem {
