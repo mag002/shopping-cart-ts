@@ -1,6 +1,7 @@
+import { CartItem } from "../types"
 import Button from "./Button"
 
-function Navbar() {
+function Navbar({ cart }: { cart: CartItem[] }) {
     // function handleNavbarItemClick(title: string): void {
     //     alert(title)
     // }
@@ -11,7 +12,7 @@ function Navbar() {
         <div>
             <Button >Home</Button>
             <Button >About</Button>
-            <Button >Cart (0)</Button>
+            <Button >Cart ({cart.length})</Button>
         </div>
     </nav >
 }

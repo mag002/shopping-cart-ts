@@ -1,9 +1,10 @@
 import { Product } from "../types";
+import Button from "./Button";
 import { CategoryBadge } from "./CategoryBadge";
 
 interface ProductCardProps {
     product: Product;
-    onAddToCart?: (product: Product) => void;
+    onAddToCart: (product: Product) => void;
 }
 
 export function ProductCard({ product, onAddToCart }: ProductCardProps) {
@@ -17,7 +18,7 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
             </div>
             <p>{product.price.toLocaleString()}₫</p>
             {product.inStock ? (
-                <button onClick={() => onAddToCart?.(product)}>Thêm vào giỏ</button>
+                <Button onClick={() => onAddToCart(product)} >Them vao gio hang</Button>
             ) : (
                 <span className="text-red-500">Hết hàng</span>
             )}

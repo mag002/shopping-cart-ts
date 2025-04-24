@@ -26,7 +26,7 @@ function App() {
     name: 'Ipad pro 11 inch',
     price: 450,
     inStock: true,
-    image: ''
+    image: 'https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png'
   },
   {
     id: '2',
@@ -34,7 +34,7 @@ function App() {
     name: 'iphone',
     price: 620,
     inStock: true,
-    image: ''
+    image: 'https://cdn.dummyjson.com/products/images/beauty/Red%20Lipstick/thumbnail.png'
 
   },
   {
@@ -43,7 +43,7 @@ function App() {
     name: 'Macbook pro M4 ',
     price: 2100,
     inStock: true,
-    image: ''
+    image: 'https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/thumbnail.png'
 
   },
   {
@@ -52,37 +52,44 @@ function App() {
     name: 'Macbook pro M4 ',
     price: 2100,
     inStock: false,
-    image: ''
+    image: 'https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/thumbnail.png'
   }
   ]
 
-  // => 3producst => 3JSX
-  // .map
+  /**
+   * 
 
+    
 
-  // props / state
-  // 
+     <p>🛒 {totalItems} sản phẩm</p>
+      <div>
+        <ul>
+          <li> <image> <h4>title</h4> x <span>quantity</span> = <span> total</span> <button>X</button>
+        </ul>
+      </div>
+      <p>Tổng: {totalPrice.toLocaleString()}₫</p>
 
+   */
+  function addToCart(product: ProductType): void {
+    const existingIndex = cart.findIndex(c => c.product.id === product.id);
+    if (existingIndex >= 0) {
+      // return cart.map(c =>
+      //   c.product.id === product.id ? { ...c, quantity: c.quantity + 1 } : c
+      // );
+      const newCart = [...cart];
+      newCart[existingIndex].quantity++;
+      setCart(newCart)
 
-  // | Logo                                       [Home][About][User]|
-
-  // CategoryBadge
-
-  function getFirstItem<T>(arr: T[]): T {
-    return arr[0]
+    } else {
+      const newCart = [...cart, { product, quantity: 1 }];
+      setCart(newCart)
+    }
   }
 
-  {/* <a href="" className=""></a> */ }
-
-  // Create a navbar component that was include 3 <Button> components
-  // WHen click on any button, alert the button name
-  // use that <Navbar> component in App.tsx
-  // p/s: 3 functions for 3 component will be written on Navbar.tsx
-  // Note: research about STATE in react component for next session
   return (
     <div>
 
-      <Navbar></Navbar>
+      <Navbar cart={cart}></Navbar>
 
       <div className="grid grid-cols-3 gap-4 mt-3">
         {
@@ -94,7 +101,7 @@ function App() {
               return true
             }
           }).map(product => {
-            return <Product key={product.id} product={product}></Product>
+            return <Product onAddToCart={addToCart} key={product.id} product={product}></Product>
             // Product({key:product.id)
           })
         }
