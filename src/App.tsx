@@ -1,112 +1,72 @@
-import './App.css'
-import Button from './components/Button'
-import Product from './components/Product'
-import Example from './Example'
-import Navbar from './components/Navbar'
 import { useState } from 'react'
-import { CartItem, Product as ProductType } from './types'
-// 1 function 
-// return JSX element
+import './App.css'
+import CartPage from './components/CartPage'
+import Navbar from './components/Navbar'
+import { Cart } from './types'
 
-function User(props: any) {
-  return <div>
-    <h3>User component - {props.name}</h3>
-    <div>
-      {props.children}
-    </div>
-  </div>
-}
+import {
+  BrowserRouter,
+  createBrowserRouter,
+  Route,
+  RouterProvider,
+  Routes,
+} from "react-router";
+import ProductListPage from './components/ProductListPage'
+import ProductDetailPage from './components/ProductDetailPage'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <div>Home page</div>
+  },
+  {
+    path: '/product',
+    element: <ProductListPage />
+  },
+  {
+    path: '/cart',
+    element: <CartPage />
+  }
+])
+
 
 function App() {
-  const [showInStock, setShowInStock] = useState(false);
-  const [cart, setCart] = useState<CartItem[]>([])
-  const productList: ProductType[] = [{
-    id: '1',
-    category: 'tablet',
-    name: 'Ipad pro 11 inch',
-    price: 450,
-    inStock: true,
-    image: 'https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png'
-  },
-  {
-    id: '2',
-    category: 'phone',
-    name: 'iphone',
-    price: 620,
-    inStock: true,
-    image: 'https://cdn.dummyjson.com/products/images/beauty/Red%20Lipstick/thumbnail.png'
 
-  },
-  {
-    id: '3',
-    category: 'computer',
-    name: 'Macbook pro M4 ',
-    price: 2100,
-    inStock: true,
-    image: 'https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/thumbnail.png'
 
-  },
-  {
-    id: '4',
-    category: 'computer',
-    name: 'Macbook pro M4 ',
-    price: 2100,
-    inStock: false,
-    image: 'https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/thumbnail.png'
-  }
-  ]
+  const mockCart: Cart = {
+    "id": 1,
+    "products": [
+      {
+        "id": 144,
+        "title": "Cricket Helmet",
+        "price": 44.99,
+        "quantity": 4,
+        "total": 179.96,
+        "discountPercentage": 11.47,
+        "discountedTotal": 159.32,
+        "thumbnail": "https://cdn.dummyjson.com/products/images/sports-accessories/Cricket%20Helmet/thumbnail.png"
+      },
+      // more products
+    ],
+    "total": 4794.8,
+    "discountedTotal": 4288.95,
+    "userId": 142,
+    "totalProducts": 5,
+    "totalQuantity": 20
+  };
 
-  /**
-   * 
 
-    
-
-     <p>🛒 {totalItems} sản phẩm</p>
-      <div>
-        <ul>
-          <li> <image> <h4>title</h4> x <span>quantity</span> = <span> total</span> <button>X</button>
-        </ul>
-      </div>
-      <p>Tổng: {totalPrice.toLocaleString()}₫</p>
-
-   */
-  function addToCart(product: ProductType): void {
-    const existingIndex = cart.findIndex(c => c.product.id === product.id);
-    if (existingIndex >= 0) {
-      // return cart.map(c =>
-      //   c.product.id === product.id ? { ...c, quantity: c.quantity + 1 } : c
-      // );
-      const newCart = [...cart];
-      newCart[existingIndex].quantity++;
-      setCart(newCart)
-
-    } else {
-      const newCart = [...cart, { product, quantity: 1 }];
-      setCart(newCart)
-    }
-  }
 
   return (
-    <div>
-
-      <Navbar cart={cart}></Navbar>
-
-      <div className="grid grid-cols-3 gap-4 mt-3">
-        {
-
-          productList.filter(product => {
-            if (showInStock) {
-              return product.inStock
-            } else {
-              return true
-            }
-          }).map(product => {
-            return <Product onAddToCart={addToCart} key={product.id} product={product}></Product>
-            // Product({key:product.id)
-          })
-        }
-      </div>
-    </div>
+    <BrowserRouter>
+      <Navbar cart={mockCart}></Navbar>
+      <Routes>
+        <Route path="/" element={<div>Homepage</div>} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/product" element={<ProductListPage />} />
+        <Route path="/product/:id" element={<ProductDetailPage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
