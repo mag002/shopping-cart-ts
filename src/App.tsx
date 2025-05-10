@@ -13,6 +13,7 @@ import {
 } from "react-router";
 import ProductListPage from './components/ProductListPage'
 import ProductDetailPage from './components/ProductDetailPage'
+import CounterProvider from './context/useCounterContext'
 
 const router = createBrowserRouter([
   {
@@ -58,15 +59,19 @@ function App() {
 
 
   return (
-    <BrowserRouter>
-      <Navbar cart={mockCart}></Navbar>
-      <Routes>
-        <Route path="/" element={<div>Homepage</div>} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/product" element={<ProductListPage />} />
-        <Route path="/product/:id" element={<ProductDetailPage />} />
-      </Routes>
-    </BrowserRouter>
+    <CounterProvider>
+      <BrowserRouter>
+        <Navbar cart={mockCart}></Navbar>
+        {/* // swtich case | default*/}
+        <Routes>
+          <Route path="/" element={<div>Homepage</div>} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/product" element={<ProductListPage />} />
+          <Route path="/product/:id" element={<ProductDetailPage />} />
+          <Route path="*" element={<h1>404 not found!</h1>} />
+        </Routes>
+      </BrowserRouter>
+    </CounterProvider>
   )
 }
 

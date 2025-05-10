@@ -1,24 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router"
 import PageSpinner from "./PageSpinner";
+import useFetchData from "../utils/useFetchData";
 
 function ProductDetailPage() {
-    const [product, setProduct] = useState();
-    const [isLoading, setIsLoading] = useState(false);
     const param = useParams();
-    console.log(param)
 
+    const { data: product, isLoading, fetchData } = useFetchData('https://dummyjson.com/products/' + param.id);
+    // // call product detail
     useEffect(() => {
-        fetchProductDetail();
-    }, [])
-    const fetchProductDetail = async () => {
-        setIsLoading(true)
-        const res = await fetch('https://dummyjson.com/products/' + param.id);
-        const data = await res.json();
-        setProduct(data);
-        setIsLoading(false)
-    }
-    // call product detail
+        fetchData();
+    }, []);
+
 
 
     return isLoading ? <PageSpinner /> : <div className="mt-10">

@@ -1,6 +1,28 @@
+import { useState } from "react";
 import { CartProduct } from "../types"
 
 function CartItem({ cartItem }: { cartItem: CartProduct }) {
+    const [currentQuantity, setCurrentQuantity] = useState<number>(cartItem.quantity);
+
+    const handleChangeQuantity = (quantity: number) => {
+        // if click decrease button => currentQuantity - 1
+
+        // if click increase button => currentQuantity + 1
+
+        // if input a number => currentQuantity = number
+
+        // quantity > stock => quantity = maxStock
+
+
+        // ===== allow negative or not
+        // quantity=0 => alert to delete
+        // quantity<0 => return back 0
+
+        setCurrentQuantity(quantity);
+    }
+
+
+
     const { title, thumbnail, price, quantity } = cartItem
     return <div className="px-3">
         <div className="flex gap-3 items-center border-b-1 border-b-gray-300">
@@ -8,13 +30,13 @@ function CartItem({ cartItem }: { cartItem: CartProduct }) {
             <h3 className="w-2/12 text-lg">{title}</h3>
             <p className="w-2/12">{price}</p>
             <div><div className="relative flex items-center max-w-[8rem]">
-                <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input" className="bg-gray-100    hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 -gray-700 focus:ring-2 focus:outline-none">
+                <button onClick={() => handleChangeQuantity(currentQuantity - 1)} type="button" id="decrement-button" data-input-counter-decrement="quantity-input" className="bg-gray-100    hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 -gray-700 focus:ring-2 focus:outline-none">
                     <svg className="w-3 h-3 text-gray-900 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
                     </svg>
                 </button>
-                <input type="text" id="quantity-input" data-input-counter aria-describedby="helper-text-explanation" className="border-y-1 bg-gray-50 border-x-0 border-y-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5   -400  -blue-500 -blue-500" placeholder={quantity.toString()} required />
-                <button type="button" id="increment-button" data-input-counter-increment="quantity-input" className="bg-gray-100    hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 -gray-700 focus:ring-2 focus:outline-none">
+                <input onChange={(event) => handleChangeQuantity(Number(event.target.value))} type="text" id="quantity-input" data-input-counter aria-describedby="helper-text-explanation" className="border-y-1 bg-gray-50 border-x-0 border-y-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5   -400  -blue-500 -blue-500" placeholder={quantity.toString()} required />
+                <button onClick={() => handleChangeQuantity(currentQuantity + 1)} type="button" id="increment-button" data-input-counter-increment="quantity-input" className="bg-gray-100    hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 -gray-700 focus:ring-2 focus:outline-none">
                     <svg className="w-3 h-3 text-gray-900 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
                     </svg>

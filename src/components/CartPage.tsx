@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import CartItem from "./CartItem";
 import Spinner from "./Spinner";
 import { CartProduct } from "../types";
+import useCounter from "../utils/useCounter";
+import useFetchData from "../utils/useFetchData";
+import { CounterContext } from "../context/useCounterContext";
 
 
 function CartSpinner() {
@@ -9,39 +12,19 @@ function CartSpinner() {
         <Spinner />
     </div>
 }
-// micro frontend
-//
 
 function CartPage() {
-    const [cart, setCart] = useState<CartProduct[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const { data, isLoading, fetchData } = useFetchData('https://dummyjson.com/carts/1')
 
+    // const { count, increase, decrease } = useCounter();
+    const cart: CartProduct[] = data.products || [];
+
+    const counterContext = useContext(CounterContext);
 
     useEffect(() => {
         fetchData()
     }, [])
 
-
-    const fetchData = async () => {
-        try {
-            setIsLoading(true)
-            const res = await fetch('https://dummyjson.com/carts/1');
-            const data = await res.json()
-            setCart(data.products);
-            setIsLoading(false);
-        } catch (e) {
-
-            console.log(e)
-        }
-    }
-
-    function fetchDataPromise() {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve('DATA FETCHED!')
-            }, 5000)
-        })
-    }
 
     return <div className="flex gap-5 p-3">
 
@@ -67,7 +50,12 @@ function CartPage() {
             -   Implement ProductDetailPage UI
             */}
         </div>
-        <div className=" shadow w-4/12 rounded">b</div>
+        <div className=" shadow w-4/12 rounded">
+            {/* {count} */}
+            <button onClick={counterContext.increase}>+</button>
+            <button onClick={counterContext.decrease}>-</button>
+            {JSON.stringify(counterContext.counter)}
+        </div>
     </div>
 }
 

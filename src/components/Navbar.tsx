@@ -1,11 +1,21 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Cart } from "../types"
 import Button from "./Button"
 import { NavLink } from "react-router";
+import useCounter from "../utils/useCounter";
+import { CounterContext } from "../context/useCounterContext";
+
+
+// useContext
+// use[customHook]
 
 function Navbar({ cart }: { cart: Cart }) {
     const [open, setOpen] = useState(false);
+    // const { count, increase, decrease } = useCounter()
+    const counterContext = useContext(CounterContext);
 
+
+    console.log(counterContext)
     // function handleNavbarItemClick(title: string): void {
     //     alert(title)
     // }
@@ -13,6 +23,12 @@ function Navbar({ cart }: { cart: Cart }) {
     return <nav className="navbar py-2">
         <div>
             Logo
+            {/* 
+            {count}
+            <button onClick={increase}>+</button>
+            <button onClick={decrease}>-</button> */}
+            {JSON.stringify(counterContext)}
+
         </div>
         <div>
             {/* // onclick => setState BrowserRouter => re-render component | update browser path */}
