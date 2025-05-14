@@ -10,17 +10,18 @@ import { useLocation, useParams, useSearchParams } from "react-router";
 
 function ProductListPage() {
     const [searchParams, setSearchParams] = useSearchParams();
+    const skip = 9
 
     // Get a specific query parameter
     const page = searchParams.get('page') || 1;
-    const { data, isLoading, fetchData } = useFetchData('https://dummyjson.com/products?limit=10&skip=' + (Number(page) * 10 - 10))
+    const { data, isLoading, fetchData } = useFetchData(`https://dummyjson.com/products?limit=${skip}&skip= ${(Number(page) * skip - skip)}`)
     console.log(page)
     /**
      * limit: 30
      * skip: 0
      * total: 194
      *  => 194 total
-     * = skip 10 => 10 for each page
+     * = skipskip => 10 for each page
      * => 20 
      */
 
@@ -36,7 +37,7 @@ function ProductListPage() {
 
     return <div className="mt-15">
         <div className="w-full flex justify-end">
-            <Pagination current={page ? Number(page) : 1} totalPage={Math.ceil(data.total / 10)}></Pagination>
+            <Pagination current={page ? Number(page) : 1} totalPage={Math.ceil(data.total / skip)}></Pagination>
         </div>
         <div className="grid grid-cols-3 gap-4 mt-3">
             {isLoading ? <PageSpinner /> : products.map((product, i) => {

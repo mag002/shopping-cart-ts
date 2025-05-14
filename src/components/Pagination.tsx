@@ -18,13 +18,14 @@ function Pagination({ current, totalPage }: { current: number, totalPage: number
         if (current > 2) {
             listNumber = [1, '...', current - 1, current, current + 1, '...', totalPage]
         }
-        if (current >= totalPage - 2) {
+        if (current >= totalPage - 1) {
             listNumber = [1, '...', '...', totalPage - 2, totalPage - 1, totalPage]
         }
         listPage = listNumber.map((index, i) => {
             return <li key={Math.random() + i}>
-                <Link to={typeof index === 'number' ? '/product?page=' + index : '/product?page=' + current} className={`flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white
-             border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 ${index === current ? 'dark:bg-gray-800' : 'dark:bg-gray-600'} 
+                <Link to={typeof index === 'number' ? '/product?page=' + index : '/product?page=' + current} className={`flex items-center justify-center px-3
+                 h-8 ms-0 leading-tight text-gray-500 bg-white
+             border border-e-0 border-gray-300 ${i == 0 ? 'rounded-s-lg' : i == listNumber.length - 1 ? 'rounded-e-lg' : ''} hover:bg-gray-100 hover:text-gray-700 ${index === current ? 'dark:bg-gray-800' : 'dark:bg-gray-600'} 
              dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}>{index}</Link>
             </li>
         })
